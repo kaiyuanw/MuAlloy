@@ -1,0 +1,12 @@
+# Mac
+.DS_Store
+
+# Gradle
+.gradle/
+/build/
+*.jar
+!gradle-wrapper.jar
+
+# JetBrains
+.idea/
+*.iml
