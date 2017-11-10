@@ -17,7 +17,8 @@ some tests.
 
 * Dependencies
   - Java 8: Must be installed and accessible from `PATH`.
-  - Bash 4: Must be installed and accessible from `PATH`.
+  - Bash 4.4: Must be installed and accessible from `PATH`.
+  - Gradle 4.3.1: Must be installed and accessible from `PATH`.
   - Alloy4.2: Must be in the classpath.  `MuAlloy` comes with Alloy4.2
     under `libs/alloy4.2.jar`.
   - Commons CLI 1.4: Must be in the classpath.  `MuAlloy` comes with
