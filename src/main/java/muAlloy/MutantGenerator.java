@@ -59,6 +59,7 @@ public class MutantGenerator {
       if (testPath != null) {
         testPath = Paths.get(testPath).toAbsolutePath().toString();
         FileUtil.createDirsIfNotExist(Paths.get(testPath).getParent().toString());
+        FileUtil.deleteFile(testPath);
       }
       return new MutantGeneratorOpt(modelPath.toString(), mutantDir.toString(), scope, testPath);
     } catch (ParseException e) {

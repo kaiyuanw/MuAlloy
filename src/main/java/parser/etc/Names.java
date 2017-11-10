@@ -35,10 +35,10 @@ public class Names {
   public final static String MUTATED = "MUTATED";
   public final static String EQUIV_ASSERTION_NAME = "EQUIV";
   public final static String ORIGINAL_MODEL_NAME = "ORIGIN";
-  public final static String MUTATION_BASED_TEST_NAME = "TEST";
   public final static String IGNORE_NAME = "IGNORE";
 
   public final static String TEST_PREFIX = "test";
+  public final static String MUTANT_NAME = "mutant";
 
   // Command line
   public final static String MODEL_PATH = "model-path";

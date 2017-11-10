@@ -25,12 +25,9 @@ public class ModelMutator extends MutationVisitor {
   @Override
   public void visit(OpenDecl n, Object arg) {
     if (n.getFileName().equals("util/ordering")) {
-      MutantGeneratorOpt mgo = (MutantGeneratorOpt) opt;
-      mgo.getSpecialCase().addOrderingOpenDecl(n);
+      opt.getSpecialCase().addOrderingOpenDecl(n);
       // Add ordering module if used.
-      FileUtil.writeText(n.accept(opt.getPSV(), null) + Names.NEW_LINE,
-          Paths.get(mgo.getMutantDirPath(), Names.MUTATION_BASED_TEST_NAME + Names.DOT_ALS)
-              .toString(), true);
+      FileUtil.writeText(n.accept(opt.getPSV(), null) + Names.NEW_LINE, opt.getTestPath(), true);
     }
     super.visit(n, arg);
   }
@@ -42,8 +39,7 @@ public class ModelMutator extends MutationVisitor {
       return;
     }
     nonEquivMutantNum++;
-    MutantGeneratorOpt mgo = (MutantGeneratorOpt) opt;
-    FileUtil.writeText(mutationData.getMutantAsString(), Paths.get(mgo.getMutantDirPath(),
+    FileUtil.writeText(mutationData.getMutantAsString(), Paths.get(opt.getMutantDirPath(),
         String.join(Names.UNDERSCORE, Arrays.asList(clazz.getSimpleName(), String.valueOf(count++)))
             + Names.DOT_ALS).toString(), false);
   }

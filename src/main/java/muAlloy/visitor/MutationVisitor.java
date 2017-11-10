@@ -42,7 +42,6 @@ import parser.ast.nodes.VarExpr;
 import parser.ast.visitor.VoidVisitorAdapter;
 import parser.etc.MutationData;
 import parser.etc.Names;
-import parser.opt.Opt;
 
 public abstract class MutationVisitor extends VoidVisitorAdapter<Object> {
 

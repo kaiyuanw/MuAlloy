@@ -4,6 +4,7 @@ import static parser.etc.Context.logger;
 import static parser.etc.Names.HIDDEN_MUALLOY_DIR;
 import static parser.etc.Names.MODEL_PATH;
 import static parser.etc.Names.MUTANT_DIR;
+import static parser.etc.Names.MUTANT_NAME;
 import static parser.etc.Names.NEW_LINE;
 import static parser.etc.Names.TEST_PATH;
 import static parser.util.Util.printMutationTestingRunnerUsage;
@@ -12,16 +13,13 @@ import edu.mit.csail.sdg.alloy4.A4Reporter;
 import edu.mit.csail.sdg.alloy4.Err;
 import edu.mit.csail.sdg.alloy4compiler.ast.Command;
 import edu.mit.csail.sdg.alloy4compiler.parser.CompModule;
-import edu.mit.csail.sdg.alloy4compiler.translator.A4Options;
 import edu.mit.csail.sdg.alloy4compiler.translator.A4Solution;
 import edu.mit.csail.sdg.alloy4compiler.translator.TranslateAlloyToKodkod;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import muAlloy.opt.MutationTestingOpt;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -53,8 +51,6 @@ public class MutationTestingRunner {
     FileUtil.writeText(model, Paths.get(hiddenMuAlloyDirPath.toString(), modelFileName).toString(),
         false);
     // Run tests against the original model.
-    A4Options options = new A4Options();
-    options.noOverflow = true;
     String hiddenTestPath = Paths.get(hiddenMuAlloyDirPath.toString(), testFileName).toString();
     String modelName = StringUtil.beforeSubstring(modelFileName, Names.DOT, true);
     FileUtil.writeText("open " + modelName + NEW_LINE + testSuite, hiddenTestPath, false);
@@ -62,12 +58,12 @@ public class MutationTestingRunner {
     assert testModule != null;
     List<Boolean> testResultForModel = new ArrayList<>();
     for (Command cmd : testModule.getAllCommands()) {
-      if (cmd.check || !cmd.label.startsWith(Names.TEST_PREFIX)) {
+      if (!cmd.label.toLowerCase().startsWith(Names.TEST_PREFIX)) {
         continue;
       }
       try {
-        A4Solution ans = TranslateAlloyToKodkod
-            .execute_command(A4Reporter.NOP, testModule.getAllReachableSigs(), cmd, options);
+        A4Solution ans = TranslateAlloyToKodkod.execute_command(
+            A4Reporter.NOP, testModule.getAllReachableSigs(), cmd, opt.getOptions());
         testResultForModel.add(ans.satisfiable());
       } catch (Err err) {
         err.printStackTrace();
@@ -76,26 +72,26 @@ public class MutationTestingRunner {
     // Run tests against each mutant model and compute mutation score.
     int totalMutantsNum = mutantFiles.length;
     int killedMutantNum = 0;
-    for (String mutantName : Arrays.asList(mutantFiles).stream()
-        .map(mutantFile -> StringUtil.beforeSubstring(mutantFile.getName(), Names.DOT, true))
-        .collect(Collectors.toList())) {
+    for (File mutantFile : mutantFiles) {
+      String mutantName = StringUtil.beforeSubstring(mutantFile.getName(), Names.DOT, true);
+      String mutant = FileUtil.readText(mutantFile.getAbsolutePath());
       FileUtil.writeText(
-          model,
-          Paths.get(hiddenMuAlloyDirPath.toString(), mutantName + Names.DOT_ALS).toString(),
+          mutant,
+          Paths.get(hiddenMuAlloyDirPath.toString(), MUTANT_NAME + Names.DOT_ALS).toString(),
           false);
-      FileUtil.writeText("open " + mutantName + NEW_LINE + testSuite, hiddenTestPath, false);
+      FileUtil.writeText("open " + MUTANT_NAME + NEW_LINE + testSuite, hiddenTestPath, false);
       testModule = AlloyUtil.compileAlloyModule(hiddenTestPath);
       assert testModule != null;
       boolean isKilled = false;
       int commandNumber = testModule.getAllCommands().size();
       for (int i = 0; i < commandNumber; i++) {
         Command cmd = testModule.getAllCommands().get(i);
-        if (cmd.check || !cmd.label.startsWith(Names.TEST_PREFIX)) {
+        if (!cmd.label.toLowerCase().startsWith(Names.TEST_PREFIX)) {
           continue;
         }
         try {
-          A4Solution ans = TranslateAlloyToKodkod
-              .execute_command(A4Reporter.NOP, testModule.getAllReachableSigs(), cmd, options);
+          A4Solution ans = TranslateAlloyToKodkod.execute_command(
+              A4Reporter.NOP, testModule.getAllReachableSigs(), cmd, opt.getOptions());
           isKilled = ans.satisfiable() != testResultForModel.get(i);
           if (isKilled) {
             killedMutantNum += 1;
@@ -109,7 +105,7 @@ public class MutationTestingRunner {
     }
     logger.info("Mutation Score: " + killedMutantNum + "/" + totalMutantsNum);
     // Remove the hidden MuAlloy directory.
-//    FileUtil.deleteDirectory(hiddenMuAlloyDirPath.toString());
+    FileUtil.deleteDirectory(hiddenMuAlloyDirPath.toString());
   }
 
   private static MutationTestingOpt parseCommandLineArgs(String[] args) {
@@ -150,9 +146,6 @@ public class MutationTestingRunner {
     }
   }
 
-  /**
-   * TODO(kaiyuanw): Test it.
-   */
   public static void main(String[] args) throws Err {
     MutationTestingOpt opt = parseCommandLineArgs(args);
     if (opt == null) {

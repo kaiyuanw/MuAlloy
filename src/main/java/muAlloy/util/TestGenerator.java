@@ -141,9 +141,7 @@ public class TestGenerator {
   public static void generateAndSaveAUnitTest(A4Solution sol, Node node, MutantGeneratorOpt opt) {
     String test = translateToTest(node, sol, opt.getSpecialCase(), Names.EQUIV_ASSERTION_NAME,
         opt.getScope(), opt.getOptions());
-    FileUtil.writeText(test,
-        Paths.get(opt.getMutantDirPath(), Names.MUTATION_BASED_TEST_NAME + Names.DOT_ALS)
-            .toString(), true);
+    FileUtil.writeText(test, opt.getTestPath(), true);
   }
 
   @Deprecated
@@ -276,9 +274,7 @@ public class TestGenerator {
           .append(Names.NEW_LINE);
 //            sb.append(formulaPrefix).append(formulaToEvaluate).append("}").append(Names.NEW_LINE);
       sb.append(runCommand).append(" expect ").append(expect).append(Names.NEW_LINE);
-      FileUtil.writeText(sb.toString(),
-          Paths.get(opt.getMutantDirPath(), Names.MUTATION_BASED_TEST_NAME + Names.DOT_ALS)
-              .toString(), true);
+      FileUtil.writeText(sb.toString(), opt.getTestPath(), true);
     } catch (Err er) {
       Context.logger.error("<Evaluator error occurred: " + er + ">");
     }
