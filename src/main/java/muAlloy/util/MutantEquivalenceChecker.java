@@ -158,7 +158,8 @@ public class MutantEquivalenceChecker {
    * Check if a mutant is equivalent to the original model.  If so, return true. Otherwise, save the
    * mutant and generate a test that kills it.
    */
-  public static boolean checkEquivalenceAndGenerateTest(String equivModel, Node node, Opt opt) {
+  public static boolean checkEquivalenceAndGenerateTest(
+      String equivModel, Node node, MutantGeneratorOpt opt) {
     FileUtil.writeText(equivModel, Names.EQUIV_FILE_PATH, false);
     CompModule module = AlloyUtil.compileAlloyModule(Names.EQUIV_FILE_PATH);
     assert module != null;
@@ -173,8 +174,8 @@ public class MutantEquivalenceChecker {
         Context.logger.debug(equivModel);
         return true;
       }
-      if (opt instanceof MutantGeneratorOpt) {
-        TestGenerator.generateAndSaveAUnitTest(ans, node, (MutantGeneratorOpt) opt);
+      if (!opt.noTest()) {
+        TestGenerator.generateAndSaveAUnitTest(ans, node, opt);
       }
     } catch (Err err) {
       err.printStackTrace();
