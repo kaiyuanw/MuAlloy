@@ -1,11 +1,13 @@
 package muAlloy;
 
 import static parser.etc.Context.logger;
+import static parser.etc.Names.DOT_ALS;
 import static parser.etc.Names.HIDDEN_MUALLOY_DIR;
 import static parser.etc.Names.MODEL_PATH;
 import static parser.etc.Names.MUTANT_DIR;
 import static parser.etc.Names.MUTANT_NAME;
 import static parser.etc.Names.NEW_LINE;
+import static parser.etc.Names.TEST;
 import static parser.etc.Names.TEST_PATH;
 import static parser.util.Util.printMutationTestingRunnerUsage;
 
@@ -44,21 +46,20 @@ public class MutationTestingRunner {
     Path hiddenMuAlloyDirPath = Paths.get(System.getProperty("user.home"), HIDDEN_MUALLOY_DIR)
         .toAbsolutePath();
     String modelFileName = StringUtil.afterSubstring(opt.getModelPath(), File.separator, true);
-    String testFileName = StringUtil.afterSubstring(opt.getTestPath(), File.separator, true);
     FileUtil.createDirsIfNotExist(hiddenMuAlloyDirPath.toString());
     String model = FileUtil.readText(opt.getModelPath());
     String testSuite = FileUtil.readText(opt.getTestPath());
     FileUtil.writeText(model, Paths.get(hiddenMuAlloyDirPath.toString(), modelFileName).toString(),
         false);
     // Run tests against the original model.
-    String hiddenTestPath = Paths.get(hiddenMuAlloyDirPath.toString(), testFileName).toString();
+    String hiddenTestPath = Paths.get(hiddenMuAlloyDirPath.toString(), TEST + DOT_ALS).toString();
     String modelName = StringUtil.beforeSubstring(modelFileName, Names.DOT, true);
     FileUtil.writeText("open " + modelName + NEW_LINE + testSuite, hiddenTestPath, false);
     CompModule testModule = AlloyUtil.compileAlloyModule(hiddenTestPath);
     assert testModule != null;
     List<Boolean> testResultForModel = new ArrayList<>();
     for (Command cmd : testModule.getAllCommands()) {
-      if (!cmd.label.toLowerCase().startsWith(Names.TEST_PREFIX)) {
+      if (!cmd.label.toLowerCase().startsWith(Names.TEST)) {
         continue;
       }
       try {
@@ -86,7 +87,7 @@ public class MutationTestingRunner {
       int commandNumber = testModule.getAllCommands().size();
       for (int i = 0; i < commandNumber; i++) {
         Command cmd = testModule.getAllCommands().get(i);
-        if (!cmd.label.toLowerCase().startsWith(Names.TEST_PREFIX)) {
+        if (!cmd.label.toLowerCase().startsWith(Names.TEST)) {
           continue;
         }
         try {

@@ -32,7 +32,7 @@ public class TestGenerator {
       String commandName, int scope, A4Options options) {
     try {
       StringBuilder sb = new StringBuilder();
-      String testName = Names.TEST_PREFIX + COUNT++;
+      String testName = Names.TEST + COUNT++;
       sb.append("pred ").append(testName).append(" {\n");
       StringBuilder sigDecls = new StringBuilder();
       StringBuilder endParens = new StringBuilder();
@@ -155,7 +155,7 @@ public class TestGenerator {
     }
     try {
       StringBuilder sb = new StringBuilder();
-      String testName = Names.TEST_PREFIX + COUNT++;
+      String testName = Names.TEST + COUNT++;
       sb.append("pred ").append(testName).append(" {\n");
       StringBuilder sigDecls = new StringBuilder();
       StringBuilder endParens = new StringBuilder();
