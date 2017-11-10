@@ -1,5 +1,4 @@
 group 'org.mualloy.core'
-version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
@@ -10,8 +9,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile files('libs/alloy4.2.jar')
-    // https://mvnrepository.com/artifact/commons-cli/commons-cli
-    compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+    compile files('libs/commons-cli-1.4.jar')
 }
 
 jar {
