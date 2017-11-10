@@ -111,7 +111,7 @@ public class MutationTestingRunner {
   private static MutationTestingOpt parseCommandLineArgs(String[] args) {
     Options options = new Options();
     options.addRequiredOption("o", MODEL_PATH, true, "Path of the original model.");
-    options.addRequiredOption("u", MUTANT_DIR, true, "Mutant directory.");
+    options.addRequiredOption("m", MUTANT_DIR, true, "Mutant directory.");
     options.addRequiredOption("t", TEST_PATH, true, "Path of mutant killing tests.");
 
     CommandLineParser parser = new DefaultParser();
