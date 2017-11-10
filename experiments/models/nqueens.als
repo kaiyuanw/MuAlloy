@@ -1,4 +1,5 @@
 module nqueens
+open util/integer
 
 sig Queen {
   row : Int,
@@ -8,7 +9,7 @@ sig Queen {
 fact {
   all q: Queen{
     q.row >= 0 && q.row < #Queen
-	q.col >= 0 && q.col < #Queen
+	  q.col >= 0 && q.col < #Queen
   }
 }
 
