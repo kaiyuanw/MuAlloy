@@ -6,7 +6,6 @@ import edu.mit.csail.sdg.alloy4compiler.ast.Command;
 import edu.mit.csail.sdg.alloy4compiler.ast.ExprVar;
 import edu.mit.csail.sdg.alloy4compiler.ast.Sig;
 import edu.mit.csail.sdg.alloy4compiler.parser.CompModule;
-import edu.mit.csail.sdg.alloy4compiler.translator.A4Options;
 import edu.mit.csail.sdg.alloy4compiler.translator.A4Solution;
 import edu.mit.csail.sdg.alloy4compiler.translator.A4Tuple;
 import edu.mit.csail.sdg.alloy4compiler.translator.A4TupleSet;
@@ -29,7 +28,7 @@ public class TestGenerator {
   private static int COUNT = 1;
 
   public static String translateToTest(Node node, A4Solution sol, SpecialCase specialCase,
-      String commandName, int scope, A4Options options) {
+      String commandName, int scope) {
     try {
       StringBuilder sb = new StringBuilder();
       String testName = Names.TEST + COUNT++;
@@ -140,7 +139,7 @@ public class TestGenerator {
 
   public static void generateAndSaveAUnitTest(A4Solution sol, Node node, MutantGeneratorOpt opt) {
     String test = translateToTest(node, sol, opt.getSpecialCase(), Names.EQUIV_ASSERTION_NAME,
-        opt.getScope(), opt.getOptions());
+        opt.getScope());
     FileUtil.writeText(test, opt.getTestPath(), true);
   }
 

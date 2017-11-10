@@ -29,6 +29,7 @@ public class Names {
   public final static String SPACE = "\\s";
   public final static String UNDERSCORE = "_";
   public final static String VERTICAL_BAR = "|";
+  public final static String DOLLAR = "$";
 
   // Special names
   public final static String HIDDEN_MUALLOY_DIR = ".mualloy";

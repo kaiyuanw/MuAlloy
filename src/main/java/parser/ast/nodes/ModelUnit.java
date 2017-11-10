@@ -1,5 +1,7 @@
 package parser.ast.nodes;
 
+import static parser.etc.Names.DOLLAR;
+
 import edu.mit.csail.sdg.alloy4.ConstList;
 import edu.mit.csail.sdg.alloy4.Pair;
 import edu.mit.csail.sdg.alloy4compiler.ast.Command;
@@ -77,7 +79,8 @@ public class ModelUnit extends Node {
   }
 
   private List<OpenDecl> createOpenDeclList(List<CompModule.Open> openDecls) {
-    return openDecls.stream().map(openDecl -> new OpenDecl(this, openDecl))
+    return openDecls.stream().filter(open -> !open.alias.contains(DOLLAR))
+        .map(openDecl -> new OpenDecl(this, openDecl))
         .collect(Collectors.toList());
   }
 
