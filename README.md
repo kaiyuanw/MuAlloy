@@ -45,7 +45,6 @@ run `./mualloy.sh --build` in Bash 4.4 to build `MuAlloy`.
 ## Generate Mutants
 
 To generate mutants, run
-
 ```
 ./mualloy.sh --generate-mutants -o <arg> -m <arg> [-s <arg>] [-t <arg>]
 ```
@@ -53,7 +52,6 @@ or use the full argument name
 ```
 ./mualloy.sh --generate-mutants --model-path <arg> --mutant-dir <arg> [--scope <arg>] [--test-path <arg>]
 ```
-
  * `-o,--model-path`: This argument is required.  Pass the model you
    want to mutate as the argument.
  * `-m,--mutant-dir`: This argument is required.  Pass the directory
@@ -70,10 +68,12 @@ or use the full argument name
    If the argument is not specified, no mutant killing test suite will
    be generated.
 
+The command also reports the number of equivalent mutants and
+non-equivalent mutants.
+
 ## Mutation Testing
 
 To run mutation testing, run
-
 ```
 ./mualloy.sh --run-mutation-testing -o <arg> -m <arg> -t <arg>
 ```
@@ -81,7 +81,6 @@ or use the full argument name
 ```
 ./mualloy.sh --run-mutation-testing --model-path <arg> --mutant-dir <arg> --test-path <arg>
 ```
-
  * `-o,--model-path`: This argument is required.  Pass the original
    model as the argument.  `MuAlloy` collects test satisfiability
    result for the original model and then compare it with the test
@@ -95,6 +94,10 @@ or use the full argument name
    you want to run as argument.  `MuAlloy` runs the test suite against
    the original model and mutant models to compute the mutation score
    for the test sutie.
+
+The command also reports whether each mutant is killed by the test
+suite or not.  After the test suite is run against all mutants, the
+command reports the mutation score.
 
 ## Examples
 
@@ -111,3 +114,35 @@ models can be found under `experiments/models`:
  * `Dijkstra`: Models how mutexes are grabbed and released by
    processes, and how Dijkstra's mutex ordering criterion can prevent
    deadlocks.
+
+To generate mutants for a given example model, run
+```
+./mualloy.sh --generate-mutants-example ${model}
+```
+where `${model}` can be one of `[singlyLinkedList, binaryTree,
+fullTree, handshake, nqueens, farmer, dijkstra]`.  By default,
+`MuAlloy` reads the model from `experiments/models/${model}.als` and
+generates mutants to `experiments/gen/${model}` directory.  The mutant
+killing test suite is saved at `experiments/gen/tests/${model}.als`.
+The scope used varies for different models.  For more details, take a
+look at `models.sh`.
+
+To generate mutants for all 7 example models, run
+```
+./mualloy.sh --generate-mutants-example-all
+```
+
+To run mutation testing for a given example model and a test suite,
+run
+```
+./mualloy.sh --run-mutation-testing-example "${model}"
+```
+where `${model}` can be one of `[singlyLinkedList, binaryTree,
+fullTree, handshake, nqueens, farmer, dijkstra]`.  By default,
+`MuAlloy` reads the model and mutants from
+`experiments/models/${model}.als` and `experiments/gen/${model}`
+directory, respectively.  **This means you should first generate
+mutants for example models and then run mutation testing**.  `MuAlloy`
+reads the test suite at `experiments/test-suite/${model}.als`.  Note
+that the test suites under `experiments/test-suite` are actually
+generated using `MuAlloy` so all mutants should be killed.
