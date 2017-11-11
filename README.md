@@ -177,15 +177,14 @@ has zero or one `header` of type `Node`.  Each `Node` atom has zero or
 one next `Node` followed by `link`.  `header` and `link` are partial
 functions.  The predicate `Acyclic` restricts its parameter `List` `l`
 to be acyclic.  The body of the `Acyclic` predicate states that `l` is
-acyclic if
-* it does not have an `header` or
-* there exists some `Node` reachable from `l`'s `header` following
-  zero or more `link`, such that the `Node` does not have a subsequent
-  node following `link`.
+acyclic if (1) it does not have an `header` or (2) there exists some
+`Node` reachable from `l`'s `header` following zero or more `link`,
+such that the `Node` does not have a subsequent node following `link`.
 
 ## Alloy Instance
 
 Below is an Alloy instance for the :
+
 ![List Instance](../documentation/documentation/images/ListInstance.png)
 
 The instance states that there are two List atoms (`List0` and
