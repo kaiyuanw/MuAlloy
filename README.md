@@ -215,7 +215,6 @@ there is no loop in the list.
 An `AUnit` test is a pair of a model valuation and a run command.  For
 example, the above Alloy instance can be written as an AUnit test as
 below:
-
 ```Alloy
 pred test {
   some disj List0, List1: List {
@@ -230,7 +229,6 @@ pred test {
 }
 run test for 3
 ```
-
 The test declares 2 disjoint `List` atoms (`List0` and `List1`) and 2
 disjoint `Node` atoms (`Node0` and `Node1`).  It restrict the entire
 `List` set to be {`List0`, `List1`} and `Node` set to be {`Node0`,
@@ -241,9 +239,8 @@ isomorphic Alloy instance shown [above](#alloy-instance).
 
 ## Killing Mutant
 
-One of the mutant `MuAlloy` generates from the list example model is
-shown below:
-
+One of the mutant `MuAlloy` generates from the list example model
+using [QOR](#mutation-operators) is shown below:
 ```Alloy
 module SinglyLinkedList
 sig List {
@@ -257,7 +254,6 @@ pred Acyclic (l: List) {
 }
 run Acyclic
 ```
-
 `MuAlloy` mutates `some n: ...` to `all n: ...`, which restricts every
 `Node` in `l` without a subsequent `Node` following `link`.  This
 overconstrains `l` so it can only have one `Node`.  The above `AUnit`
