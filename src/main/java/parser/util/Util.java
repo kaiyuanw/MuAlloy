@@ -10,6 +10,7 @@ public class Util {
   public static int CLI_USAGE_DESCRIPTION_WIDTH = 1000;
 
   public static void printMutantGeneratorUsage(HelpFormatter formatter, Options options) {
+    formatter.setOptionComparator(null);
     formatter.printHelp(
         CLI_USAGE_DESCRIPTION_WIDTH,
         MutantGenerator.class.getSimpleName(),
@@ -22,6 +23,7 @@ public class Util {
   }
 
   public static void printMutationTestingRunnerUsage(HelpFormatter formatter, Options options) {
+    formatter.setOptionComparator(null);
     formatter.printHelp(
         CLI_USAGE_DESCRIPTION_WIDTH,
         MutationTestingRunner.class.getSimpleName(),
