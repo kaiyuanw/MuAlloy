@@ -191,8 +191,8 @@ run the `Acyclic` predicate:
 The instance states that there are two List atoms (`List0` and
 `List1`) and two Node atoms (`Node0` and `Node1`).  `List0`'s header
 is `Node1` and `List1`'s header is `Node0`.  `Node1`'s next node is
-`Node0`.  Assuming `List1` is implicitly passed as the argument of
-`Acyclic` predicate, we can see that `List1` is indeed acyclic as
+`Node0`.  Assuming `List0` is implicitly passed as the argument of
+`Acyclic` predicate, we can see that `List0` is indeed acyclic as
 there is no loop in the list.
 
 ## AUnit Test
@@ -208,16 +208,21 @@ pred test {
       List = List0 + List1
       header = List0->Node1 + List1->Node0
       Node = Node0 + Node1
-      link = Node0->Node1
-      Acyclic[List1]
+      link = Node1->Node0
+      Acyclic[List0]
     }
   }
 }
 run test for 3
 ```
 
-The test declares 2 disjoint `List` atoms (`List0` and `List1`) and 2 disjoint `Node` atoms (`Node0` and `Node1`).  It restrict the entire `List` set to be {`List0`, `List1`} and `Node` set to be {`Node0`, `Node1`}.  The predicate also states that the `header` maps `List0` to `Node1` and `List1` to `Node0`, and the `link` maps `Node0` to `Node1`.    and If you run the `test` predicate, you will obtain the same Alloy
-instance shown above.
+The test declares 2 disjoint `List` atoms (`List0` and `List1`) and 2
+disjoint `Node` atoms (`Node0` and `Node1`).  It restrict the entire
+`List` set to be {`List0`, `List1`} and `Node` set to be {`Node0`,
+`Node1`}.  The predicate also states that the `header` maps `List0` to
+`Node1` and `List1` to `Node0`, and the `link` maps `Node1` to
+`Node0`.  If you run the `test` predicate, you will obtain the
+isomorphic Alloy instance shown above.
 
 ## Killing Mutant
 
@@ -233,10 +238,19 @@ sig Node {
   link: lone Node
 }
 pred Acyclic (l: List) {
-  no l.header or **some** n: l.header.*link | no n.link 
+  no l.header or all n: l.header.*link | no n.link 
 }
 run Acyclic
 ```
+
+`MuAlloy` mutates `some n: ...` to `all n: ...`, which restricts every
+`Node` in `l` without a subsequent `Node` following `link`.  This
+overconstrains `l` so it can only have one `Node`.  The above `AUnit`
+test will be unsatisfiable for `List0` as `Node1` has a subsequent
+`Node` as `Node0`.  Since the `test` is satisfiable for the original
+model but is unsatisfiable for the mutant, it kills the mutant.
+Similarly, if an AUnit test is unsatisfiable for the original model
+but is satisfiable for the mutant, it also kills the mutant.
 
 # Publications
 * "Automated Test Generation and Mutation Testing for Alloy."
