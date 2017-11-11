@@ -28,8 +28,7 @@ on any model given some tests.
 
 ## Clone MuAlloy repo
 
-To run `MuAlloy`, use `git` to clone
-[MuAlloy](https://github.com/kaiyuanw/MuAlloy.git) repository.
+To run `MuAlloy`, use `git` to clone the repository.
 
 ```Shell
 git clone git@github.com:kaiyuanw/MuAlloy.git
