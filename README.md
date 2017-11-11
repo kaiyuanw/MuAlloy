@@ -146,3 +146,7 @@ mutants for example models and then run mutation testing**.  `MuAlloy`
 reads the test suite at `experiments/test-suite/${model}.als`.  Note
 that the test suites under `experiments/test-suite` are actually
 generated using `MuAlloy` so all mutants should be killed.
+
+# Publications
+* "Automated Test Generation and Mutation Testing for Alloy."
+    Allison Sullivan, Kaiyuan Wang, Razieh Nokhbeh Zaeem, and Sarfraz Khurshid, ICST 2017
