@@ -1,4 +1,4 @@
-# MuAlloy: A mutation testing framework for Alloy
+# MuAlloy: A Mutation Testing Framework for Alloy
 
 `MuAlloy` is a command line tool built on top of
 [Alloy4.2](https://github.com/AlloyTools/org.alloytools.alloy).  The
@@ -59,17 +59,41 @@ or use the full argument name
  * `-m,--mutant-dir`: This argument is required.  Pass the directory
    to which you want to save mutants as the argument.  If the
    directory does not exist, a new directory will be created.
-
  * `-s,--scope`: This argument is optional.  Pass the Alloy scope for
    equivalence checking, which is mainly used to prune equivalent
    mutants.  For each non-equivalent mutant, the scope will also be
    used to generate a run command for the corresponding `AUnit` test
    that kills the mutant.  If the argument is not specified, a default
    value of 3 is used.
-
  * `-t,--test-path`: This argument is optional.  Pass the path to
    which you want to save mutant killing test suite as the argument.
    If the argument is not specified, no mutant killing test suite will
    be generated.
 
-## Generate Mutants
+## Mutation Testing
+
+To run mutation testing, run
+
+```
+./mualloy.sh --run-mutation-testing -o <arg> -m <arg> -t <arg>
+```
+or use the full argument name
+```
+./mualloy.sh --run-mutation-testing --model-path <arg> --mutant-dir <arg> --test-path <arg>
+```
+
+ * `-o,--model-path`: This argument is required.  Pass the original
+   model as the argument.  `MuAlloy` collects test satisfiability
+   result for the original model and then compare it with the test
+   result for mutant model.  If the results are different, then the
+   mutant is killed.  Otherwise, it is not.
+
+ * `-m,--mutant-dir`: This argument is required.  Pass the directory
+   where mutants are saved as the argument.  `MuAlloy` collects test
+   result for each of the mutant model and check if it can be killed
+   by the test suite or not.
+
+ * `-t,--test-path`: This argument is required.  Pass the test suite
+   you want to run as argument.  `MuAlloy` runs the test suite against
+   the original model and mutant models to compute the mutation score
+   for the test sutie.
