@@ -237,7 +237,7 @@ disjoint `Node` atoms (`Node0` and `Node1`).  It restrict the entire
 `Node1`}.  The predicate also states that the `header` maps `List0` to
 `Node1` and `List1` to `Node0`, and the `link` maps `Node1` to
 `Node0`.  If you run the `test` predicate, you will obtain the
-isomorphic Alloy instance shown [above](##Alloy-Instance).
+isomorphic Alloy instance shown [above](#alloy-instance).
 
 ## Killing Mutant
 
