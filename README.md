@@ -31,7 +31,7 @@ some tests.
 To run `MuAlloy`, use `git` to clone
 [MuAlloy](https://github.com/kaiyuanw/MuAlloy.git) repository.
 
-```
+```Shell
 git clone git@github.com:kaiyuanw/MuAlloy.git
 ```
 
@@ -45,11 +45,11 @@ run `./mualloy.sh --build` in Bash 4.4 to build `MuAlloy`.
 ## Generate Mutants
 
 To generate mutants, run
-```
+```Shell
 ./mualloy.sh --generate-mutants -o <arg> -m <arg> [-s <arg>] [-t <arg>]
 ```
 or use the full argument name
-```
+```Shell
 ./mualloy.sh --generate-mutants --model-path <arg> --mutant-dir <arg> [--scope <arg>] [--test-path <arg>]
 ```
  * `-o,--model-path`: This argument is required.  Pass the model you
@@ -74,11 +74,11 @@ non-equivalent mutants.
 ## Mutation Testing
 
 To run mutation testing, run
-```
+```Shell
 ./mualloy.sh --run-mutation-testing -o <arg> -m <arg> -t <arg>
 ```
 or use the full argument name
-```
+```Shell
 ./mualloy.sh --run-mutation-testing --model-path <arg> --mutant-dir <arg> --test-path <arg>
 ```
  * `-o,--model-path`: This argument is required.  Pass the original
@@ -116,7 +116,7 @@ models can be found under `experiments/models`:
    deadlocks.
 
 To generate mutants for a given example model, run
-```
+```Shell
 ./mualloy.sh --generate-mutants-example ${model}
 ```
 where `${model}` can be one of `[singlyLinkedList, binaryTree,
@@ -128,13 +128,13 @@ The scope used varies for different models.  For more details, take a
 look at `models.sh`.
 
 To generate mutants for all 7 example models, run
-```
+```Shell
 ./mualloy.sh --generate-mutants-example-all
 ```
 
 To run mutation testing for a given example model and a test suite,
 run
-```
+```Shell
 ./mualloy.sh --run-mutation-testing-example "${model}"
 ```
 where `${model}` can be one of `[singlyLinkedList, binaryTree,
@@ -147,14 +147,45 @@ reads the test suite at `experiments/test-suite/${model}.als`.  Note
 that the test suites under `experiments/test-suite` are actually
 generated using `MuAlloy` so all mutants should be killed.
 
+To run mutation testing for all 7 example models, run
+```Shell
+./mualloy.sh --run-mutation-testing-example-all
+```
+
 # Background
+
+## Alloy Model
+
+We show an [acyclic singly linked
+list](experiments/models/singlyLinkedList.als) Alloy model below:
+
+```Alloy
+module SinglyLinkedList
+sig List {
+  header : lone Node
+}
+sig Node {
+  link: lone Node
+}
+pred Acyclic (l: List) {
+  no l.header or some n: l.header.*link | no n.link 
+}
+run Acyclic
+```
 
 ## Alloy Instance
 
-Below is an Alloy instance for the [acyclic singly linked list
-model](experiments/models/singlyLinkedList.als):
-
+Below is an Alloy instance for the :
 ![List Instance](../documentation/documentation/images/ListInstance.png)
+The instance states that there are two List atoms (`List0` and
+`List1`) and two Node atoms (`Node0` and `Node1`).  `List0`'s header
+is `Node1` and `List1`'s header is `Node0`.  `Node1`'s next node is
+`Node0`.  The instance satisfies the `Acyclic` predicate declared in
+the model as there is no loop for `List0` or `List1`.
+
+## AUnit Test
+
+
 
 # Publications
 * "Automated Test Generation and Mutation Testing for Alloy."
