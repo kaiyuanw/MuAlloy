@@ -151,7 +151,7 @@ generated using `MuAlloy` so all mutants should be killed.
 
 ## Alloy Instance
 
-[![List Instance](https://github.com/kaiyuanw/MuAlloy/blob/documentation/documentation/images/ListInstance.png)]
+[![List Instance](https://github.com/kaiyuanw/MuAlloy/blob/documentation/documentation/images/ListInstance.png)](## Alloy Instance)
 
 # Publications
 * "Automated Test Generation and Mutation Testing for Alloy."
