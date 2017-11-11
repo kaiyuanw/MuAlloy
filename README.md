@@ -213,7 +213,7 @@ there is no loop in the list.
 ## AUnit Test
 
 An `AUnit` test is a pair of a model valuation and a run command.  For
-example, the above Alloy instance can be written as an AUnit test as
+example, the above Alloy instance can be written as an `AUnit` test as
 below:
 ```Alloy
 pred test {
@@ -255,13 +255,14 @@ pred Acyclic (l: List) {
 run Acyclic
 ```
 `MuAlloy` mutates `some n: ...` to `all n: ...`, which restricts every
-`Node` in `l` without a subsequent `Node` following `link`.  This
-overconstrains `l` so it can only have one `Node`.  The above `AUnit`
-test will be unsatisfiable for `List0` as `Node1` has a subsequent
-`Node` as `Node0`.  Since the `test` is satisfiable for the original
-model but is unsatisfiable for the mutant, it kills the mutant.
-Similarly, if an AUnit test is unsatisfiable for the original model
-but is satisfiable for the mutant, it also kills the mutant.
+`Node` in `l` without a subsequent `Node` along the `link`.  This
+overconstrains `l` so it can be empty or only have one `Node`.  The
+above `AUnit` test will be unsatisfiable for `List0` as `Node1` has a
+subsequent node `Node0`.  Since the `test` is satisfiable for the
+original model but is unsatisfiable for the mutant, it kills the
+mutant.  Similarly, if an `AUnit` test is unsatisfiable for the
+original model but is satisfiable for the mutant, it also kills the
+mutant.
 
 # Publications
 * "MuAlloy : An automated mutation system for Alloy."
