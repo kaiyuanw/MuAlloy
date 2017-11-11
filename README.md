@@ -273,3 +273,7 @@ but is satisfiable for the mutant, it also kills the mutant.
     Kaiyuan Wang, Master Thesis 2015
 * "Automated Test Generation and Mutation Testing for Alloy."
     Allison Sullivan, Kaiyuan Wang, Razieh Nokhbeh Zaeem, and Sarfraz Khurshid, ICST 2017
+
+# License
+
+MIT License, see `LICENSE` for more information.
