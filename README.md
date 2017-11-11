@@ -160,7 +160,7 @@ To run mutation testing for all 7 example models, run
 |   QOR    | Quantifier Operator Replacement.  E.g. `all n: Node` => `some n: Node` |
 |   UOR    | Unary Operator Replacement.  E.g. `some Node` => `no Node`             |
 |   BOR    | Binary Operator Replacement.  E.g. `a + b` => `a - b`                  |
-|   LOR    | Formula List Operator Replacement.  E.g. `a && b` => `a || b`          |
+|   LOR    | Formula List Operator Replacement.  E.g. `a && b` => `a \|\| b`          |
 |   UOI    | Unary Operator Insertion.  E.g. `a.b` => `a.*b`                        |
 |   UOD    | Unary Operator Deletion.  E.g. `a.^b` => `a.b`                         |
 |   BOE    | Binary Operator Exchange.  E.g. `a - b` => `b - a`                     |
