@@ -158,7 +158,6 @@ To run mutation testing for all 7 example models, run
 
 We show an [acyclic singly linked
 list](experiments/models/singlyLinkedList.als) Alloy model below:
-
 ```Alloy
 module SinglyLinkedList
 sig List {
@@ -173,10 +172,22 @@ pred Acyclic (l: List) {
 run Acyclic
 ```
 
+The model declares a set of `List` and `Node` atoms.  Each `List` atom
+has zero or one `header` of type `Node`.  Each `Node` atom has zero or
+one next `Node` followed by `link`.  `header` and `link` are partial
+functions.  The predicate `Acyclic` restricts its parameter `List` `l`
+to be acyclic.  The body of the `Acyclic` predicate states that `l` is
+acyclic if
+* it does not have an `header` or
+* there exists some `Node` reachable from `l`'s `header` following
+  zero or more `link`, such that the `Node` does not have a subsequent
+  node following `link`.
+
 ## Alloy Instance
 
 Below is an Alloy instance for the :
 ![List Instance](../documentation/documentation/images/ListInstance.png)
+
 The instance states that there are two List atoms (`List0` and
 `List1`) and two Node atoms (`Node0` and `Node1`).  `List0`'s header
 is `Node1` and `List1`'s header is `Node0`.  `Node1`'s next node is
