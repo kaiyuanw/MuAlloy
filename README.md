@@ -183,19 +183,60 @@ such that the `Node` does not have a subsequent node following `link`.
 
 ## Alloy Instance
 
-Below is an Alloy instance for the :
+Below is an satisfiable Alloy instance for the above list model if we
+run the `Acyclic` predicate:
 
 ![List Instance](../documentation/documentation/images/ListInstance.png)
 
 The instance states that there are two List atoms (`List0` and
 `List1`) and two Node atoms (`Node0` and `Node1`).  `List0`'s header
 is `Node1` and `List1`'s header is `Node0`.  `Node1`'s next node is
-`Node0`.  The instance satisfies the `Acyclic` predicate declared in
-the model as there is no loop for `List0` or `List1`.
+`Node0`.  Assuming `List1` is implicitly passed as the argument of
+`Acyclic` predicate, we can see that `List1` is indeed acyclic as
+there is no loop in the list.
 
 ## AUnit Test
 
+An `AUnit` test is a pair of a model valuation and a run command.  For
+example, the above Alloy instance can be written as an AUnit test as
+below:
 
+```Alloy
+pred test {
+  some disj List0, List1: List {
+    some disj Node0, Node1: Node {
+      List = List0 + List1
+      header = List0->Node1 + List1->Node0
+      Node = Node0 + Node1
+      link = Node0->Node1
+      Acyclic[List1]
+    }
+  }
+}
+run test for 3
+```
+
+The test declares 2 disjoint `List` atoms (`List0` and `List1`) and 2 disjoint `Node` atoms (`Node0` and `Node1`).  It restrict the entire `List` set to be {`List0`, `List1`} and `Node` set to be {`Node0`, `Node1`}.  The predicate also states that the `header` maps `List0` to `Node1` and `List1` to `Node0`, and the `link` maps `Node0` to `Node1`.    and If you run the `test` predicate, you will obtain the same Alloy
+instance shown above.
+
+## Killing Mutant
+
+One of the mutant `MuAlloy` generates from the list example model is
+shown below:
+
+```Alloy
+module SinglyLinkedList
+sig List {
+  header : lone Node
+}
+sig Node {
+  link: lone Node
+}
+pred Acyclic (l: List) {
+  no l.header or **some** n: l.header.*link | no n.link 
+}
+run Acyclic
+```
 
 # Publications
 * "Automated Test Generation and Mutation Testing for Alloy."
