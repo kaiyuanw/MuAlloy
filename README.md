@@ -154,6 +154,8 @@ To run mutation testing for all 7 example models, run
 
 # Mutation Operators
 
+`MuAlloy` supports the following mutation operators.
+
 | Operator |                              Description                               |
 |----------|------------------------------------------------------------------------|
 |   MOR    | Multiplicity Operator Replacement.  E.g. `some sig` => `lone sig`      |
@@ -267,5 +269,7 @@ Similarly, if an AUnit test is unsatisfiable for the original model
 but is satisfiable for the mutant, it also kills the mutant.
 
 # Publications
+* "MuAlloy : An automated mutation system for Alloy."
+    Kaiyuan Wang, Master Thesis 2015
 * "Automated Test Generation and Mutation Testing for Alloy."
     Allison Sullivan, Kaiyuan Wang, Razieh Nokhbeh Zaeem, and Sarfraz Khurshid, ICST 2017
