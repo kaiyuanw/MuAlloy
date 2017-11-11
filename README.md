@@ -87,13 +87,27 @@ or use the full argument name
    result for the original model and then compare it with the test
    result for mutant model.  If the results are different, then the
    mutant is killed.  Otherwise, it is not.
-
  * `-m,--mutant-dir`: This argument is required.  Pass the directory
    where mutants are saved as the argument.  `MuAlloy` collects test
    result for each of the mutant model and check if it can be killed
    by the test suite or not.
-
  * `-t,--test-path`: This argument is required.  Pass the test suite
    you want to run as argument.  `MuAlloy` runs the test suite against
    the original model and mutant models to compute the mutation score
    for the test sutie.
+
+## Examples
+
+`MuAlloy` provides 7 example models and the commands to generate
+mutants and collect mutation score for each of them.  The example
+models can be found under `experiments/models`:
+
+ * `SinglyLinkedList`: Models an acyclic singly linked list.
+ * `BinaryTree`: Models an arbitrary binary tree.
+ * `FullTree`: Models a full binary tree.
+ * `Handshake`: Models Halmos handshake problem.
+ * `NQueens`: Models [N queens problem](https://en.wikipedia.org/wiki/Eight_queens_puzzle).
+ * `Farmer`: Models the [farmer crossing river problem](https://en.wikipedia.org/wiki/Fox,_goose_and_bag_of_beans_puzzle).
+ * `Dijkstra`: Models how mutexes are grabbed and released by
+   processes, and how Dijkstra's mutex ordering criterion can prevent
+   deadlocks.
