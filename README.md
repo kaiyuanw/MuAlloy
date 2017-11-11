@@ -5,7 +5,7 @@
 tool provides basic features to mutate an Alloy model and generate
 non-equivalent mutant models.  For each non-equivalent mutant model,
 `MuAlloy` is able to generate an Alloy instance that kills it.  All
-mutant killing instances can be encoded as AUnit tests and saved on
+mutant killing instances can be encoded as `AUnit` tests and saved on
 the disk.  `MuAlloy` can also run mutation testing on any model given
 some tests.
 
@@ -23,3 +23,25 @@ some tests.
     under `libs/alloy4.2.jar`.
   - Commons CLI 1.4: Must be in the classpath.  `MuAlloy` comes with
     Commons CLI under `libs/commons-cli-1.4.jar`.
+
+# Installation:
+
+## Clone `MuAlloy` repo
+
+To run `MuAlloy`, use `git` to clone
+[MuAlloy](https://github.com/kaiyuanw/MuAlloy.git) repository.
+
+## Build `MuAlloy`
+
+To build `MuAlloy`, Java 8 and Gradle 4.3.1 must be installed.  Then,
+run `./mualloy.sh --build` in Bash 4.4 to build `MuAlloy`.
+
+# Quick Start:
+
+## Generate Mutants
+
+To generate mutants, run
+
+```
+./mualloy.sh --generate-mutants -o <arg> -m <arg> [-s <arg>] [-t <arg>]
+```
