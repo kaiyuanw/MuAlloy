@@ -2,12 +2,12 @@
 
 `MuAlloy` is a command line tool built on top of
 [Alloy4.2](https://github.com/AlloyTools/org.alloytools.alloy).  The
-tool provides basic features to mutate an Alloy model and generate
-non-equivalent mutant models.  For each non-equivalent mutant model,
-`MuAlloy` is able to generate an Alloy instance that kills it.  All
-mutant killing instances can be encoded as `AUnit` tests and saved on
-the disk.  `MuAlloy` can also run mutation testing on any model given
-some tests.
+tool provides basic features to mutate an Alloy model at its AST level
+and generate non-equivalent mutant models.  For each non-equivalent
+mutant model, `MuAlloy` is able to generate an Alloy instance that
+kills it.  All mutant killing instances can be encoded as `AUnit`
+tests and saved on the disk.  `MuAlloy` can also run mutation testing
+on any model given some tests.
 
 # Requirements:
 
@@ -151,6 +151,20 @@ To run mutation testing for all 7 example models, run
 ```Shell
 ./mualloy.sh --run-mutation-testing-example-all
 ```
+
+# Mutation Operators
+
+| Operator |                              Description                               |
+|----------|------------------------------------------------------------------------|
+|   MOR    | Multiplicity Operator Replacement.  E.g. `some sig` => `lone sig`      |
+|   QOR    | Quantifier Operator Replacement.  E.g. `all n: Node` => `some n: Node` |
+|   UOR    | Unary Operator Replacement.  E.g. `some Node` => `no Node`             |
+|   BOR    | Binary Operator Replacement.  E.g. `a + b` => `a - b`                  |
+|   LOR    | Formula List Operator Replacement.  E.g. `a && b` => `a || b`          |
+|   UOI    | Unary Operator Insertion.  E.g. `a.b` => `a.*b`                        |
+|   UOD    | Unary Operator Deletion.  E.g. `a.^b` => `a.b`                         |
+|   BOE    | Binary Operator Exchange.  E.g. `a - b` => `b - a`                     |
+|   IEOE   | Imply-Else Operator Exchange.  E.g. `a => b else c` => `a => c else b` |
 
 # Background
 
