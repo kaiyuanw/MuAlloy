@@ -26,7 +26,7 @@ some tests.
 
 # Installation:
 
-## Clone `MuAlloy` repo
+## Clone MuAlloy repo
 
 To run `MuAlloy`, use `git` to clone
 [MuAlloy](https://github.com/kaiyuanw/MuAlloy.git) repository.
@@ -35,7 +35,7 @@ To run `MuAlloy`, use `git` to clone
 git clone git@github.com:kaiyuanw/MuAlloy.git
 ```
 
-## Build `MuAlloy`
+## Build MuAlloy
 
 To build `MuAlloy`, Java 8 and Gradle 4.3.1 must be installed.  Then,
 run `./mualloy.sh --build` in Bash 4.4 to build `MuAlloy`.
@@ -56,7 +56,6 @@ or use the full argument name
 
  * `-o,--model-path`: This argument is required.  Pass the model you
    want to mutate as the argument.
-   
  * `-m,--mutant-dir`: This argument is required.  Pass the directory
    to which you want to save mutants as the argument.  If the
    directory does not exist, a new directory will be created.
@@ -72,3 +71,5 @@ or use the full argument name
    which you want to save mutant killing test suite as the argument.
    If the argument is not specified, no mutant killing test suite will
    be generated.
+
+## Generate Mutants
