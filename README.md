@@ -37,7 +37,7 @@ git clone git@github.com:kaiyuanw/MuAlloy.git
 ## Build MuAlloy
 
 To build `MuAlloy`, Java 8 and Gradle 4.3.1 must be installed.  Then,
-run `./mualloy.sh --build` in Bash 4.4 to build `MuAlloy`.
+you can run `./mualloy.sh --build` in Bash 4.4 to build `MuAlloy`.
 
 # Quick Start:
 
@@ -83,16 +83,16 @@ or use the full argument name
  * `-o,--model-path`: This argument is required.  Pass the original
    model as the argument.  `MuAlloy` collects test satisfiability
    result for the original model and then compare it with the test
-   result for mutant model.  If the results are different, then the
+   result for a mutant model.  If the results are different, then the
    mutant is killed.  Otherwise, it is not.
  * `-m,--mutant-dir`: This argument is required.  Pass the directory
-   where mutants are saved as the argument.  `MuAlloy` collects test
-   result for each of the mutant model and check if it can be killed
-   by the test suite or not.
+   to which mutants are saved as the argument.  `MuAlloy` collects
+   test result for each of the mutant model and check if it can be
+   killed by the test suite or not.
  * `-t,--test-path`: This argument is required.  Pass the test suite
-   you want to run as argument.  `MuAlloy` runs the test suite against
-   the original model and mutant models to compute the mutation score
-   for the test sutie.
+   you want to run as the argument.  `MuAlloy` runs the test suite
+   against the original model and mutant models to compute the
+   mutation score for the test sutie.
 
 The command also reports whether each mutant is killed by the test
 suite or not.  After the test suite is run against all mutants, the
@@ -101,8 +101,8 @@ command reports the mutation score.
 ## Examples
 
 `MuAlloy` provides 7 example models and the commands to generate
-mutants and collect mutation score for each of them.  The example
-models can be found under `experiments/models`:
+mutants and collect mutation score for each model.  The example models
+can be found under `experiments/models`:
 
  * `SinglyLinkedList`: Models an acyclic singly linked list.
  * `BinaryTree`: Models an arbitrary binary tree.
@@ -121,10 +121,10 @@ To generate mutants for a given example model, run
 where `${model}` can be one of `[singlyLinkedList, binaryTree,
 fullTree, handshake, nqueens, farmer, dijkstra]`.  By default,
 `MuAlloy` reads the model from `experiments/models/${model}.als` and
-generates mutants to `experiments/gen/${model}` directory.  The mutant
-killing test suite is saved at `experiments/gen/tests/${model}.als`.
-The scope used varies for different models.  For more details, take a
-look at `models.sh`.
+generates mutants under `experiments/gen/${model}` directory.
+`MuAlloy` saves the mutant killing test suite at
+`experiments/gen/tests/${model}.als`.  The scope used varies for
+different models.  For more details, take a look at `models.sh`.
 
 To generate mutants for all 7 example models, run
 ```Shell
@@ -189,12 +189,12 @@ run Acyclic
 
 The model declares a set of `List` and `Node` atoms.  Each `List` atom
 has zero or one `header` of type `Node`.  Each `Node` atom has zero or
-one next `Node` followed by `link`.  `header` and `link` are partial
-functions.  The predicate `Acyclic` restricts its parameter `List` `l`
-to be acyclic.  The body of the `Acyclic` predicate states that `l` is
+one following `Node` along `link`.  `header` and `link` are partial
+functions.  The predicate `Acyclic` restricts its parameter `l` to be
+acyclic.  The body of the `Acyclic` predicate states that `l` is
 acyclic if (1) it does not have an `header` or (2) there exists some
 `Node` reachable from `l`'s `header` following zero or more `link`,
-such that the `Node` does not have a subsequent node following `link`.
+such that the `Node` does not have a subsequent node along the `link`.
 
 ## Alloy Instance
 
@@ -203,8 +203,8 @@ run the `Acyclic` predicate:
 
 ![List Instance](../documentation/documentation/images/ListInstance.png)
 
-The instance states that there are two List atoms (`List0` and
-`List1`) and two Node atoms (`Node0` and `Node1`).  `List0`'s header
+The instance states that there are two `List` atoms (`List0` and
+`List1`) and two `Node` atoms (`Node0` and `Node1`).  `List0`'s header
 is `Node1` and `List1`'s header is `Node0`.  `Node1`'s next node is
 `Node0`.  Assuming `List0` is implicitly passed as the argument of
 `Acyclic` predicate, we can see that `List0` is indeed acyclic as
@@ -237,7 +237,7 @@ disjoint `Node` atoms (`Node0` and `Node1`).  It restrict the entire
 `Node1`}.  The predicate also states that the `header` maps `List0` to
 `Node1` and `List1` to `Node0`, and the `link` maps `Node1` to
 `Node0`.  If you run the `test` predicate, you will obtain the
-isomorphic Alloy instance shown above.
+isomorphic Alloy instance shown [above](##Alloy-Instance).
 
 ## Killing Mutant
 
