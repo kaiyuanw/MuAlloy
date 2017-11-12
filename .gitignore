@@ -12,3 +12,6 @@
 # MuAlloy
 .hidden
 experiments/gen
+
+# Paper
+papers/
