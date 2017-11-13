@@ -176,7 +176,7 @@ list](experiments/models/singlyLinkedList.als) Alloy model below:
 ```Alloy
 module SinglyLinkedList
 sig List {
-  header : lone Node
+  header: lone Node
 }
 sig Node {
   link: lone Node
@@ -244,7 +244,7 @@ using [QOR](#mutation-operators) is shown below:
 ```Alloy
 module SinglyLinkedList
 sig List {
-  header : lone Node
+  header: lone Node
 }
 sig Node {
   link: lone Node
