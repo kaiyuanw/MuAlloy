@@ -230,7 +230,7 @@ pred test {
 run test
 ```
 The test declares 2 disjoint `List` atoms (`List0` and `List1`) and 2
-disjoint `Node` atoms (`Node0` and `Node1`).  It restrict the entire
+disjoint `Node` atoms (`Node0` and `Node1`).  It restricts the entire
 `List` set to be {`List0`, `List1`} and `Node` set to be {`Node0`,
 `Node1`}.  The predicate also states that the `header` maps `List0` to
 `Node1` and `List1` to `Node0`, and the `link` maps `Node1` to
