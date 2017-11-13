@@ -227,7 +227,7 @@ pred test {
     }
   }
 }
-run test for 3
+run test
 ```
 The test declares 2 disjoint `List` atoms (`List0` and `List1`) and 2
 disjoint `Node` atoms (`Node0` and `Node1`).  It restrict the entire
