@@ -31,7 +31,7 @@ public class MutantGenerator {
     ModelMutator mm = new ModelMutator(opt);
     mu.accept(mm, null);
     logger.info("Equivalent Mutant Number: " + mm.getEquivMutantNum());
-    logger.info("NonEquivMutantNum: " + mm.getNonEquivMutantNum());
+    logger.info("Non-Equivalent Mutant Number: " + mm.getNonEquivMutantNum());
   }
 
   private static MutantGeneratorOpt parseCommandLineArgs(String[] args) {
