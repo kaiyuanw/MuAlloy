@@ -98,11 +98,12 @@ The command also reports whether each mutant is killed by the test
 suite or not.  After the test suite is run against all mutants, the
 command reports the mutation score.
 
-## Examples
+## Included Examples
 
 `MuAlloy` provides 7 example models and the commands to generate
-mutants and collect mutation score for each model.  The example models
-can be found under `experiments/models`:
+mutants and collect mutation score for each model.  The
+`experiments/models` directory contains all example models and some of
+them come from the standard Alloy distribution:
 
  * `SinglyLinkedList`: Models an acyclic singly linked list.
  * `BinaryTree`: Models an arbitrary binary tree.
