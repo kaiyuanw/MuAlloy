@@ -40,11 +40,15 @@ import parser.ast.nodes.VarExpr;
 
 public class PrettyStringVisitor implements GenericVisitor<String, Object> {
 
-  protected boolean inSigDecl;
+  /**
+   * If non-null, it means we are visiting a signature declaration and the value is the signature
+   * name.  Otherwise, it is null.
+   */
+  protected String sigName;
   protected Formatting formatting;
 
   public PrettyStringVisitor() {
-    this.inSigDecl = false;
+    this.sigName = null;
     this.formatting = new Formatting(true);
   }
 
@@ -92,7 +96,7 @@ public class PrettyStringVisitor implements GenericVisitor<String, Object> {
 
   @Override
   public String visit(SigDecl n, Object arg) {
-    inSigDecl = true;
+    sigName = n.getName();
     String sigDeclAsString =
         (n.isAbstract() ? "abstract " : "") + n.getMult() + "sig " + n.getName() + " " + (
         n.isTopLevel() ? "" : (n.isSubsig() ? "extends" : "in") + " " + n.getParentName() + " ")
@@ -102,7 +106,7 @@ public class PrettyStringVisitor implements GenericVisitor<String, Object> {
                 .collect(Collectors.toList())) + NEW_LINE : "") +
         "}" + (n.hasSigFact() ? "{" + NEW_LINE + n.getSigFact().accept(this, arg) + NEW_LINE + "}"
         : "");
-    inSigDecl = false;
+    sigName = null;
     return sigDeclAsString;
   }
 
@@ -160,10 +164,16 @@ public class PrettyStringVisitor implements GenericVisitor<String, Object> {
 
   @Override
   public String visit(BinaryExpr n, Object arg) {
-    if (inSigDecl) {
+    if (sigName != null) {
+      if (n.getLeft() instanceof SigExpr) {
+        String leftName = ((SigExpr) n.getLeft()).getName();
+        if (leftName.equals(sigName)) {
+          return n.getRight().accept(this, arg);
+        }
+      }
       if (n.getLeft() instanceof VarExpr) {
-        String value = ((VarExpr) n.getLeft()).getName();
-        if (value.equals("this")) {
+        String leftName = ((VarExpr) n.getLeft()).getName();
+        if (leftName.equals("this")) {
           return n.getRight().accept(this, arg);
         }
       }
