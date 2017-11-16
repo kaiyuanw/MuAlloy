@@ -103,34 +103,41 @@ command reports the mutation score.
 
 ## Included Examples
 
-`MuAlloy` provides 7 example models and the commands to generate
+`MuAlloy` provides 13 example models and the commands to generate
 mutants and collect mutation score for each model.  The
 `experiments/models` directory contains all example models and some of
 them come from the standard Alloy distribution:
 
- * `SinglyLinkedList`: Models an acyclic singly linked list.
- * `BinaryTree`: Models an arbitrary binary tree.
- * `FullTree`: Models a full binary tree.
- * `Handshake`: Models Halmos handshake problem.
- * `NQueens`: Models [N queens problem](https://en.wikipedia.org/wiki/Eight_queens_puzzle).
- * `Farmer`: Models the [farmer crossing river problem](https://en.wikipedia.org/wiki/Fox,_goose_and_bag_of_beans_puzzle).
- * `Dijkstra`: Models how mutexes are grabbed and released by
+ * `addr`: Models an address book.
+ * `bempl`: Models a toy lab security policy.
+ * `binaryTree`: Models an arbitrary binary tree.
+ * `ctree`: Models a two colored undirected tree.
+ * `dijkstra`: Models how mutexes are grabbed and released by
    processes, and how Dijkstra's mutex ordering criterion can prevent
    deadlocks.
+ * `farmer`: Models the [farmer crossing river problem](https://en.wikipedia.org/wiki/Fox,_goose_and_bag_of_beans_puzzle).
+ * `fullTree`: Models a full binary tree.
+ * `grade`: Models a grade book.
+ * `grand`: Models an "I'm my own grandpa" puzzle.
+ * `handshake`: Models Halmos handshake problem.
+ * `nqueens`: Models [N queens problem](https://en.wikipedia.org/wiki/Eight_queens_puzzle).
+ * `other`: Models another toy lab security policy.
+ * `singlyLinkedList`: Models an acyclic singly linked list.
 
 To generate mutants for a given example model, run
 ```Shell
 ./mualloy.sh --generate-mutants-example ${model}
 ```
-where `${model}` can be one of `[singlyLinkedList, binaryTree,
-fullTree, handshake, nqueens, farmer, dijkstra]`.  By default,
-`MuAlloy` reads the model from `experiments/models/${model}.als` and
-generates mutants under `experiments/gen/${model}` directory.
-`MuAlloy` saves the mutant killing test suite at
-`experiments/gen/tests/${model}.als`.  The scope used varies for
-different models.  For more details, take a look at `models.sh`.
+where `${model}` can be one of `[addr, bempl, binaryTree, ctree,
+dijkstra, farmer, fullTree, grade, grand, handshake, nqueens, other,
+singlyLinkedList]`.  By default, `MuAlloy` reads the model from
+`experiments/models/${model}.als` and generates mutants under
+`experiments/gen/${model}` directory.  `MuAlloy` saves the mutant
+killing test suite at `experiments/gen/tests/${model}.als`.  The scope
+used varies for different models.  For more details, take a look at
+`models.sh`.
 
-To generate mutants for all 7 example models, run
+To generate mutants for all 13 example models, run
 ```Shell
 ./mualloy.sh --generate-mutants-example-all
 ```
@@ -140,17 +147,17 @@ run
 ```Shell
 ./mualloy.sh --run-mutation-testing-example "${model}"
 ```
-where `${model}` can be one of `[singlyLinkedList, binaryTree,
-fullTree, handshake, nqueens, farmer, dijkstra]`.  By default,
-`MuAlloy` reads the model and mutants from
-`experiments/models/${model}.als` and `experiments/gen/${model}`
+where `${model}` can be one of `[addr, bempl, binaryTree, ctree,
+dijkstra, farmer, fullTree, grade, grand, handshake, nqueens, other,
+singlyLinkedList]`.  By default, `MuAlloy` reads the model and mutants
+from `experiments/models/${model}.als` and `experiments/gen/${model}`
 directory, respectively.  **This means you should first generate
 mutants for example models and then run mutation testing**.  `MuAlloy`
 reads the test suite at `experiments/test-suite/${model}.als`.  Note
 that the test suites under `experiments/test-suite` are actually
 generated using `MuAlloy` so all mutants should be killed.
 
-To run mutation testing for all 7 example models, run
+To run mutation testing for all 13 example models, run
 ```Shell
 ./mualloy.sh --run-mutation-testing-example-all
 ```
