@@ -10,6 +10,8 @@ import static parser.util.Util.printMutantGeneratorUsage;
 import edu.mit.csail.sdg.alloy4compiler.parser.CompModule;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 import muAlloy.opt.MutantGeneratorOpt;
 import muAlloy.visitor.ModelMutator;
 import org.apache.commons.cli.CommandLine;
@@ -19,6 +21,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import parser.ast.nodes.ModelUnit;
+import parser.ast.nodes.SigDecl;
 import parser.util.AlloyUtil;
 import parser.util.FileUtil;
 
@@ -30,8 +33,20 @@ public class MutantGenerator {
     // Mutate the model.
     ModelMutator mm = new ModelMutator(opt);
     mu.accept(mm, null);
+//    constrainUnivInTestSuite(opt, mm.getSigDecls());
     logger.info("Equivalent Mutant Number: " + mm.getEquivMutantNum());
     logger.info("Non-Equivalent Mutant Number: " + mm.getNonEquivMutantNum());
+  }
+
+  /**
+   * This function is used to avoid the Alloy4.2 bug reported in
+   * https://github.com/AlloyTools/org.alloytools.alloy/issues/20
+   */
+  private static void constrainUnivInTestSuite(MutantGeneratorOpt opt, List<SigDecl> sigDecls) {
+    String fact = "fact UnivConstraint {\nuniv = "
+        + String.join(" + ", sigDecls.stream().map(SigDecl::getName).collect(Collectors.toList()))
+        + "\n}";
+    FileUtil.writeText(fact, opt.getTestPath(), true);
   }
 
   private static MutantGeneratorOpt parseCommandLineArgs(String[] args) {

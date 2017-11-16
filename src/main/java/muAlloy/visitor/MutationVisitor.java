@@ -1,5 +1,6 @@
 package muAlloy.visitor;
 
+import java.util.ArrayList;
 import java.util.List;
 import muAlloy.opt.MutantGeneratorOpt;
 import muAlloy.rule.BOE;
@@ -48,10 +49,16 @@ public abstract class MutationVisitor extends VoidVisitorAdapter<Object> {
   protected MutantGeneratorOpt opt;
   protected ModelUnit mu;
   protected MInfo mi;
+  protected List<SigDecl> sigDecls;
 
   public MutationVisitor(MutantGeneratorOpt opt) {
     this.opt = opt;
     this.mi = new MInfo();
+    this.sigDecls = new ArrayList<>();
+  }
+
+  public List<SigDecl> getSigDecls() {
+    return sigDecls;
   }
 
   @Override
@@ -62,6 +69,7 @@ public abstract class MutationVisitor extends VoidVisitorAdapter<Object> {
 
   @Override
   public void visit(SigDecl n, Object arg) {
+    sigDecls.add(n);
     MInfo.MType originalType = mi.getType();
     Node originalNode = mi.getNode();
     mi.setType(MInfo.MType.SIG);
