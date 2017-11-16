@@ -26,7 +26,6 @@ import parser.ast.nodes.UnaryExpr;
 import parser.ast.visitor.PrettyStringVisitor;
 import parser.etc.Context;
 import parser.etc.Names;
-import parser.opt.Opt;
 import parser.util.AlloyUtil;
 import parser.util.FileUtil;
 
@@ -175,7 +174,7 @@ public class MutantEquivalenceChecker {
         return true;
       }
       if (!opt.noTest()) {
-        TestGenerator.generateAndSaveAUnitTest(ans, node, opt);
+        TestGenerator.generateAndSaveAUnitTest(module, ans, node, opt);
       }
     } catch (Err err) {
       err.printStackTrace();

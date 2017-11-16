@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+trap "exit" INT
+
 _MUALLOY_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 MUALLOY="MuAlloy"

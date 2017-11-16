@@ -9,13 +9,20 @@ TEST_GEN_DIR="${GEN_DIR}/tests"
 TEST_DIR="${EXPERIMENT_DIR}/test-suite"
 
 MODELS=(
-        "singlyLinkedList"
-        "binaryTree"
-        "fullTree"
-        "handshake"
-        "nqueens"
-        "farmer"
-        "dijkstra"
+        # "addr"
+        # "bempl"
+        # "binaryTree"
+        # "ctree"
+        # "dijkstra"
+        "dtree"
+        # "farmer"
+        # "fullTree"
+        # "grade"
+        # "grand"
+        # "handshake"
+        # "nqueens"
+        # "other"
+        # "singlyLinkedList"
 )
 
 declare -g -A singlyLinkedList=(
@@ -79,4 +86,67 @@ declare -g -A dijkstra=(
         [scope]="3"
         [test_gen_path]="${TEST_GEN_DIR}/dijkstra.als"
         [test_path]="${TEST_DIR}/dijkstra.als"
+)
+
+declare -g -A addr=(
+        [model_name]="addr"
+        [model_path]="${MODEL_DIR}/addr.als"
+        [mutant_dir_path]="${GEN_DIR}/addr"
+        [scope]="4"
+        [test_gen_path]="${TEST_GEN_DIR}/addr.als"
+        [test_path]="${TEST_DIR}/addr.als"
+)
+
+declare -g -A bempl=(
+        [model_name]="bempl"
+        [model_path]="${MODEL_DIR}/bempl.als"
+        [mutant_dir_path]="${GEN_DIR}/bempl"
+        [scope]="3"
+        [test_gen_path]="${TEST_GEN_DIR}/bempl.als"
+        [test_path]="${TEST_DIR}/bempl.als"
+)
+
+declare -g -A ctree=(
+        [model_name]="ctree"
+        [model_path]="${MODEL_DIR}/ctree.als"
+        [mutant_dir_path]="${GEN_DIR}/ctree"
+        [scope]="3"
+        [test_gen_path]="${TEST_GEN_DIR}/ctree.als"
+        [test_path]="${TEST_DIR}/ctree.als"
+)
+
+declare -g -A dtree=(
+        [model_name]="dtree"
+        [model_path]="${MODEL_DIR}/dtree.als"
+        [mutant_dir_path]="${GEN_DIR}/dtree"
+        [scope]="4"
+        [test_gen_path]="${TEST_GEN_DIR}/dtree.als"
+        [test_path]="${TEST_DIR}/dtree.als"
+)
+
+declare -g -A grade=(
+        [model_name]="grade"
+        [model_path]="${MODEL_DIR}/grade.als"
+        [mutant_dir_path]="${GEN_DIR}/grade"
+        [scope]="3"
+        [test_gen_path]="${TEST_GEN_DIR}/grade.als"
+        [test_path]="${TEST_DIR}/grade.als"
+)
+
+declare -g -A grand=(
+        [model_name]="grand"
+        [model_path]="${MODEL_DIR}/grand.als"
+        [mutant_dir_path]="${GEN_DIR}/grand"
+        [scope]="4"
+        [test_gen_path]="${TEST_GEN_DIR}/grand.als"
+        [test_path]="${TEST_DIR}/grand.als"
+)
+
+declare -g -A other=(
+        [model_name]="other"
+        [model_path]="${MODEL_DIR}/other.als"
+        [mutant_dir_path]="${GEN_DIR}/other"
+        [scope]="3"
+        [test_gen_path]="${TEST_GEN_DIR}/other.als"
+        [test_path]="${TEST_DIR}/other.als"
 )

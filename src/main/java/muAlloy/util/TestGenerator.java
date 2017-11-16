@@ -1,9 +1,13 @@
 package muAlloy.util;
 
+import static parser.etc.Names.SLASH;
+
 import edu.mit.csail.sdg.alloy4.A4Reporter;
 import edu.mit.csail.sdg.alloy4.Err;
 import edu.mit.csail.sdg.alloy4compiler.ast.Command;
+import edu.mit.csail.sdg.alloy4compiler.ast.Expr;
 import edu.mit.csail.sdg.alloy4compiler.ast.ExprVar;
+import edu.mit.csail.sdg.alloy4compiler.ast.Func;
 import edu.mit.csail.sdg.alloy4compiler.ast.Sig;
 import edu.mit.csail.sdg.alloy4compiler.parser.CompModule;
 import edu.mit.csail.sdg.alloy4compiler.translator.A4Solution;
@@ -14,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import muAlloy.opt.MutantGeneratorOpt;
+import parser.ast.nodes.Function;
 import parser.ast.nodes.Node;
 import parser.ast.nodes.Paragraph;
 import parser.ast.nodes.PredOrFun;
@@ -27,8 +32,9 @@ public class TestGenerator {
 
   private static int COUNT = 1;
 
-  public static String translateToTest(Node node, A4Solution sol, SpecialCase specialCase,
-      String commandName, int scope) {
+  public static String translateToTest(
+      CompModule module, A4Solution sol, Node node,
+      SpecialCase specialCase, String commandName, int scope) {
     try {
       StringBuilder sb = new StringBuilder();
       String testName = Names.TEST + COUNT++;
@@ -120,10 +126,33 @@ public class TestGenerator {
             }
           }
           Paragraph paragraph = (Paragraph) node;
-          String call =
-              paragraph.getName().replaceAll("\\$", "_") + "[" + String.join(Names.COMMA, args)
-                  + "]";
-          relAssignments.append(call.replaceAll("\\$", "")).append(Names.NEW_LINE);
+          String call = paragraph.getName().replaceAll("\\$", "_")
+              + "[" + String.join(Names.COMMA, args) + "]";
+          relAssignments.append(call.replaceAll("\\$", ""));
+          if (node instanceof Function) {
+            Func targetFun = null;
+            for (Func fun : module.getAllFunc()) {
+              String functionName = StringUtil.afterSubstring(fun.label, SLASH, false);
+              if (!fun.isPred && functionName.equals(((Function) node).getName())) {
+                targetFun = fun;
+                break;
+              }
+            }
+            assert targetFun != null;
+            List<ExprVar> skolemsList = new ArrayList<>();
+            skolems.forEach(skolemsList::add);
+            Expr functionCall = targetFun.call(skolemsList.toArray(new ExprVar[skolemsList.size()]));
+            A4TupleSet resultTupleSet = (A4TupleSet) sol.eval(functionCall);
+            StringBuilder value = new StringBuilder();
+            String prefix = "";
+            for (A4Tuple resultTuple : resultTupleSet) {
+              value.append(prefix).append(resultTuple.toString());
+              prefix = " + ";
+            }
+            String resultValuation = resultTupleSet.size() == 0 ?  "none" : value.toString();
+            relAssignments.append(" = ").append(resultValuation.replaceAll("\\$", ""));
+          }
+          relAssignments.append(Names.NEW_LINE);
         }
       }
       String runCommand = "run " + testName + " for " + scope;
@@ -137,9 +166,10 @@ public class TestGenerator {
     return null;
   }
 
-  public static void generateAndSaveAUnitTest(A4Solution sol, Node node, MutantGeneratorOpt opt) {
-    String test = translateToTest(node, sol, opt.getSpecialCase(), Names.EQUIV_ASSERTION_NAME,
-        opt.getScope());
+  public static void generateAndSaveAUnitTest(
+      CompModule module, A4Solution sol, Node node, MutantGeneratorOpt opt) {
+    String test = translateToTest(module, sol, node,
+        opt.getSpecialCase(), Names.EQUIV_ASSERTION_NAME, opt.getScope());
     FileUtil.writeText(test, opt.getTestPath(), true);
   }
 

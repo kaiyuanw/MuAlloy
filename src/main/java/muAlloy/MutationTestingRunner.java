@@ -65,6 +65,9 @@ public class MutationTestingRunner {
       try {
         A4Solution ans = TranslateAlloyToKodkod.execute_command(
             A4Reporter.NOP, testModule.getAllReachableSigs(), cmd, opt.getOptions());
+        if (cmd.label.toLowerCase().contains("test19")) {
+          System.out.println("Original: " + ans.satisfiable());
+        }
         testResultForModel.add(ans.satisfiable());
       } catch (Err err) {
         err.printStackTrace();
@@ -93,6 +96,10 @@ public class MutationTestingRunner {
         try {
           A4Solution ans = TranslateAlloyToKodkod.execute_command(
               A4Reporter.NOP, testModule.getAllReachableSigs(), cmd, opt.getOptions());
+          if (mutantName.contains("BOR_19") && cmd.label.toLowerCase().contains("test19")) {
+            System.out.println("BOR_19: " + ans.satisfiable());
+            System.exit(0);
+          }
           isKilled = ans.satisfiable() != testResultForModel.get(i);
           if (isKilled) {
             killedMutantNum += 1;

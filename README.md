@@ -65,7 +65,8 @@ or use the full argument name
  * `-t,--test-path`: This argument is optional.  Pass the path to
    which you want to save mutant killing test suite as the argument.
    If the argument is not specified, no mutant killing test suite will
-   be generated.
+   be generated.  Note that the generated test suite only contains
+   test predicates and the corresponding run commands.
 
 The command also reports the number of equivalent mutants and
 non-equivalent mutants.
@@ -92,7 +93,9 @@ or use the full argument name
  * `-t,--test-path`: This argument is required.  Pass the test suite
    you want to run as the argument.  `MuAlloy` runs the test suite
    against the original model and mutant models to compute the
-   mutation score for the test sutie.
+   mutation score for the test sutie.  Note that the test suite should
+   only contain the test predicates and the corresponding run
+   commands.
 
 The command also reports whether each mutant is killed by the test
 suite or not.  After the test suite is run against all mutants, the
