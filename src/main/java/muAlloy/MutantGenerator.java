@@ -3,6 +3,7 @@ package muAlloy;
 import static parser.etc.Context.logger;
 import static parser.etc.Names.MODEL_PATH;
 import static parser.etc.Names.MUTANT_DIR;
+import static parser.etc.Names.NEW_LINE;
 import static parser.etc.Names.SCOPE;
 import static parser.etc.Names.TEST_PATH;
 import static parser.util.Util.printMutantGeneratorUsage;
@@ -13,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import muAlloy.opt.MutantGeneratorOpt;
+import muAlloy.util.AUnitTestCase;
 import muAlloy.visitor.ModelMutator;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -33,14 +35,20 @@ public class MutantGenerator {
     // Mutate the model.
     ModelMutator mm = new ModelMutator(opt);
     mu.accept(mm, null);
+    StringBuilder testSuite = new StringBuilder();
+    int count = 1;
+    for (AUnitTestCase testCase : opt.getTests()) {
+      testSuite.append(testCase.toString(count++)).append("\n");
+    }
+    FileUtil.writeText(testSuite.toString(), opt.getTestPath(), true);
 //    constrainUnivInTestSuite(opt, mm.getSigDecls());
     logger.info("Equivalent Mutant Number: " + mm.getEquivMutantNum());
     logger.info("Non-Equivalent Mutant Number: " + mm.getNonEquivMutantNum());
+    logger.info("Unique Test Number: " + opt.getTests().size());
   }
 
   /**
-   * This function is used to avoid the Alloy4.2 bug reported in
-   * https://github.com/AlloyTools/org.alloytools.alloy/issues/20
+   * This function is used to avoid the Alloy4.2 bug reported in https://github.com/AlloyTools/org.alloytools.alloy/issues/20
    */
   private static void constrainUnivInTestSuite(MutantGeneratorOpt opt, List<SigDecl> sigDecls) {
     String fact = "fact UnivConstraint {\nuniv = "
