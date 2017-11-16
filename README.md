@@ -66,10 +66,10 @@ or use the full argument name
    which you want to save mutant killing test suite as the argument.
    If the argument is not specified, no mutant killing test suite will
    be generated.  Note that the generated test suite only contains
-   test predicates and the corresponding run commands.
+   unique test predicates and the corresponding run commands.
 
-The command also reports the number of equivalent mutants and
-non-equivalent mutants.
+The command also reports the number of equivalent mutants,
+non-equivalent mutants and unique tests.
 
 ## Mutation Testing
 
@@ -274,6 +274,14 @@ original model but is unsatisfiable for the mutant, it kills the
 mutant.  Similarly, if an `AUnit` test is unsatisfiable for the
 original model but is satisfiable for the mutant, it also kills the
 mutant.
+
+# Limitation
+
+`MuAlloy` currently does not support mutating AST nodes declared
+inside signature facts because the equivalence checking is not
+supported for now.  The workaround is to move signature fact to a
+stand-alone fact declaration.  We may support mutating signature facts
+in a future release.
 
 # Publications
 * "MuAlloy : An automated mutation system for Alloy."
