@@ -284,6 +284,8 @@ stand-alone fact declaration.  We may support mutating signature facts
 in a future release.
 
 # Publications
+* "Towards a Test Automation Framework for Alloy."
+    Allison Sullivan, Razieh Nokhbeh Zaeem, Sarfraz Khurshid, and Darko Marinov
 * "MuAlloy : An automated mutation system for Alloy."
     Kaiyuan Wang, Master Thesis 2015
 * "Automated Test Generation and Mutation Testing for Alloy."
