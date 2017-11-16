@@ -98,8 +98,8 @@ or use the full argument name
    commands.
 
 The command also reports whether each mutant is killed by the test
-suite or not.  After the test suite is run against all mutants, the
-command reports the mutation score.
+suite or not.  After `MuAlloy` finishes running the test suite against
+all mutants, the command reports the mutation score.
 
 ## Included Examples
 
