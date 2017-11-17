@@ -26,8 +26,10 @@ public class ModelMutator extends MutationVisitor {
   public void visit(OpenDecl n, Object arg) {
     if (n.getFileName().equals("util/ordering")) {
       opt.getSpecialCase().addOrderingOpenDecl(n);
-      // Add ordering module if used.
-      FileUtil.writeText(n.accept(opt.getPSV(), null) + Names.NEW_LINE, opt.getTestPath(), true);
+      if (!opt.noTest()) {
+        // Add ordering module if used.
+        FileUtil.writeText(n.accept(opt.getPSV(), null) + Names.NEW_LINE, opt.getTestPath(), true);
+      }
     }
     super.visit(n, arg);
   }

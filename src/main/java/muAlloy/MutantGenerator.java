@@ -3,7 +3,6 @@ package muAlloy;
 import static parser.etc.Context.logger;
 import static parser.etc.Names.MODEL_PATH;
 import static parser.etc.Names.MUTANT_DIR;
-import static parser.etc.Names.NEW_LINE;
 import static parser.etc.Names.SCOPE;
 import static parser.etc.Names.TEST_PATH;
 import static parser.util.Util.printMutantGeneratorUsage;
@@ -40,7 +39,9 @@ public class MutantGenerator {
     for (AUnitTestCase testCase : opt.getTests()) {
       testSuite.append(testCase.toString(count++)).append("\n");
     }
-    FileUtil.writeText(testSuite.toString(), opt.getTestPath(), true);
+    if (!opt.noTest()) {
+      FileUtil.writeText(testSuite.toString(), opt.getTestPath(), true);
+    }
 //    constrainUnivInTestSuite(opt, mm.getSigDecls());
     logger.info("Equivalent Mutant Number: " + mm.getEquivMutantNum());
     logger.info("Non-Equivalent Mutant Number: " + mm.getNonEquivMutantNum());
