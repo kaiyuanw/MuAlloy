@@ -93,7 +93,7 @@ or use the full argument name
  * `-t,--test-path`: This argument is required.  Pass the test suite
    you want to run as the argument.  `MuAlloy` runs the test suite
    against the original model and mutant models to compute the
-   mutation score for the test sutie.  Note that the test suite should
+   mutation score for the test suite.  Note that the test suite should
    only contain the test predicates and the corresponding run
    commands.
 
