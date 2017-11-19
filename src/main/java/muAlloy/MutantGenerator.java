@@ -45,7 +45,9 @@ public class MutantGenerator {
 //    constrainUnivInTestSuite(opt, mm.getSigDecls());
     logger.info("Equivalent Mutant Number: " + mm.getEquivMutantNum());
     logger.info("Non-Equivalent Mutant Number: " + mm.getNonEquivMutantNum());
-    logger.info("Unique Test Number: " + opt.getTests().size());
+    if (!opt.noTest()) {
+      logger.info("Unique Test Number: " + opt.getTests().size());
+    }
   }
 
   /**
