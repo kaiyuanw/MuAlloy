@@ -198,6 +198,7 @@ The full mutations are shown below:
  * BOE: `a ${x} b` to `b ${x} a` where `${x}` ∈ {`-`} or {`in`, `!in`,
    `=>`}.
  * IEOE: `a => b else c` to `a => c else b`.
+
 When the above mutation operators involve both `${x}` and `${y}`, they
 cannot be the same relational operator.
 
