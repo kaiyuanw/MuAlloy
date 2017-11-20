@@ -168,20 +168,38 @@ To run mutation testing for all 13 example models, run
 
 | Operator |                              Description                               |
 |----------|------------------------------------------------------------------------|
-|   MOR    | Multiplicity Operator Replacement.  E.g. `some sig` => `lone sig`      |
-|   QOR    | Quantifier Operator Replacement.  E.g. `all n: Node` => `some n: Node` |
-|   UOR    | Unary Operator Replacement.  E.g. `some Node` => `no Node`             |
+|   MOR    | Multiplicity Operator Replacement.  E.g. `some sig S` => `lone sig S`  |
+|   QOR    | Quantifier Operator Replacement.  E.g. `all s: S` => `some s: S`       |
+|   UOR    | Unary Operator Replacement.  E.g. `some S` => `no S`                   |
 |   BOR    | Binary Operator Replacement.  E.g. `a + b` => `a - b`                  |
-|   LOR    | Formula List Operator Replacement.  E.g. `a && b` => `a \|\| b`          |
+|   LOR    | Formula List Operator Replacement.  E.g. `a && b` => `a \|\| b`        |
 |   UOI    | Unary Operator Insertion.  E.g. `a.b` => `a.*b`                        |
 |   UOD    | Unary Operator Deletion.  E.g. `a.^b` => `a.b`                         |
 |   BOE    | Binary Operator Exchange.  E.g. `a - b` => `b - a`                     |
 |   IEOE   | Imply-Else Operator Exchange.  E.g. `a => b else c` => `a => c else b` |
 
 The full mutations are shown below:
-
- * MOR: `$x sig {...}` to `$y sig {...}` where `$x`,`$y` \in {`lone`,
-   `one`, `some`, `ε`} and `$x` ≠ `$y`.
+ * MOR: `${x} sig S {...}` to `${y} sig S {...}` where `${x}`, `${y}`
+   ∈ {`ε`, `lone`, `one`, `some`}.  `ε` means empty string and it
+   represents `set` multiplicity in Alloy signature declaration by
+   default.
+ * QOR: `${x} s: S | ...` to `${y} s: S | ...` where `${x}`, `${y}` ∈
+   {`all`, `no`, `lone`, `one`, `some`}.
+ * UOR: `s: ${x} S` to `s: ${y} S` where `${x}`, `${y}` ∈ {`set`,
+   `lone`, `one`, `some`}; `${x} S` to `${y} S` where `${x}`, `${y}` ∈
+   {`no`, `lone`, `one`, `some`}; `a.${x}b` to `a.${y}b` where `${x}`,
+   `${y}` ∈ {`*`, `^`}.
+ * BOR: `a ${x} b` to `a ${y} b` where `${x}`, `${y}` ∈ {`+`, `&`,
+   `-`} or {`=`, `!=`, `in`, `!in`} or {`=>`, `<=>`}.
+ * LOR: `a ${x} b ${x} ...` to `a ${y} b ${y} ...` where `${x}`,
+   `${y}` ∈ {`&&`, `||`}.
+ * UOI: `a` to `${x}a` where `${x}` ∈ {`*`, `^`, `~`}.
+ * UOD: `${x}a` to `a` where `${x}` ∈ {`*`, `^`, `~`} or {`!`}.
+ * BOE: `a ${x} b` to `b ${x} a` where `${x}` ∈ {`-`} or {`in`, `!in`,
+   `=>`}.
+ * IEOE: `a => b else c` to `a => c else b`.
+When the above mutation operators involve both `${x}` and `${y}`, they
+cannot be the same relational operator.
 
 # Background
 
