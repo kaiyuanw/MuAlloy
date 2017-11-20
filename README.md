@@ -180,7 +180,8 @@ To run mutation testing for all 13 example models, run
 
 The full mutations are shown below:
 
- * MOR: "\epsilon"
+ * MOR: `$x sig {...}` to `$y sig {...}` where `$x`,`$y` \in {`lone`,
+   `one`, `some`, `ε`} and `$x` ≠ `$y`.
 
 # Background
 
