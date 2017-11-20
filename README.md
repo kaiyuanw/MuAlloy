@@ -82,13 +82,13 @@ or use the full argument name
 ./mualloy.sh --run-mutation-testing --model-path <arg> --mutant-dir <arg> --test-path <arg>
 ```
  * `-o,--model-path`: This argument is required.  Pass the original
-   model as the argument.  `MuAlloy` collects test satisfiability
+   model as the argument.  `MuAlloy` collects the test satisfiability
    result for the original model and then compare it with the test
    result for a mutant model.  If the results are different, then the
    mutant is killed.  Otherwise, it is not.
  * `-m,--mutant-dir`: This argument is required.  Pass the directory
    to which mutants are saved as the argument.  `MuAlloy` collects
-   test result for each of the mutant model and check if it can be
+   test results for each of the mutant models and checks if it can be
    killed by the test suite or not.
  * `-t,--test-path`: This argument is required.  Pass the test suite
    you want to run as the argument.  `MuAlloy` runs the test suite
