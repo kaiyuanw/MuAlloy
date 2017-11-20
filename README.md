@@ -178,6 +178,10 @@ To run mutation testing for all 13 example models, run
 |   BOE    | Binary Operator Exchange.  E.g. `a - b` => `b - a`                     |
 |   IEOE   | Imply-Else Operator Exchange.  E.g. `a => b else c` => `a => c else b` |
 
+The full mutations are shown below:
+
+ * MOR: "\epsilon"
+
 # Background
 
 ## Alloy Model
