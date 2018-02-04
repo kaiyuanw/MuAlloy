@@ -314,6 +314,8 @@ in a future release.
     Kaiyuan Wang, Master Thesis 2015
 * "Automated Test Generation and Mutation Testing for Alloy."
     Allison Sullivan, Kaiyuan Wang, Razieh Nokhbeh Zaeem, and Sarfraz Khurshid, ICST 2017
+* "MuAlloy: A Mutation Testing Framework for Alloy."
+    Kaiyuan Wang, Allison Sullivan, and Sarfraz Khurshid, ICSE 2018
 
 # License
 
