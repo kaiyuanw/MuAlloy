@@ -40,7 +40,7 @@ import parser.util.StringUtil;
  */
 public class MutationTestingRunner {
 
-  public static void mutationTest(MutationTestingOpt opt) throws Err {
+  public static void mutationTest(MutationTestingOpt opt) {
     File mutantDir = new File(opt.getMutantDirPath());
     File[] mutantFiles = mutantDir.listFiles((d, name) -> name.endsWith(Names.DOT_ALS));
     Path hiddenMuAlloyDirPath = Paths.get(System.getProperty("user.home"), HIDDEN_MUALLOY_DIR)
